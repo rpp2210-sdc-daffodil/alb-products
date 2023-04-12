@@ -1,2 +1,2 @@
-# alb-products
+# Products Microservice
 Atelier products microservice
