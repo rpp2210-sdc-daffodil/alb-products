@@ -1,0 +1,37 @@
+{
+  "name": "alb-products",
+  "version": "1.0.0",
+  "description": "Atelier products microservice",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest products.spec",
+    "build": "babel src -d lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rpp2210-sdc-daffodil/alb-products.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rpp2210-sdc-daffodil/alb-products/issues"
+  },
+  "homepage": "https://github.com/rpp2210-sdc-daffodil/alb-products#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.4",
+    "@babel/node": "^7.20.7",
+    "@babel/plugin-transform-runtime": "^7.21.4",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.21.4",
+    "@babel/runtime": "^7.21.0",
+    "eslint": "^8.38.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "jest": "^29.5.0",
+    "nodemon": "^2.0.22"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
