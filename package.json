@@ -4,7 +4,7 @@
   "description": "Atelier products microservice",
   "main": "index.js",
   "scripts": {
-    "test": "jest products.spec",
+    "test": "jest",
     "build": "babel src -d lib"
   },
   "repository": {
