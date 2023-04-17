@@ -12,5 +12,28 @@ The endpoints are:
 * '/products': This endpoint provides a complete list of all the products in the Atelier Retailer catalog. It returns an array of product objects, each of which contains basic information about a product: ID, name, slogan, description, category, and default price.
 * '/products/:product_id':  This endpoint provides detailed information about a single product specified by product_id. It returns an object containing all the information available about the product, including its ID, name, slogan, description, features, and default price.
 * '/products/:product_id/styles': This endpoint provides information about the styles available for a single product specified by product_id. It returns an object containing an array of style objects, each of which contains information about a specific style for the product, such as its ID, name, original price, sale price, photos, and a boolean indicating if it is the default style for that product.
-*'/products/:product_id/related': This endpoint provides information about the related products for a single product specified by product_id. It returns an array of product IDs that are related to the specified product.
+* '/products/:product_id/related': This endpoint provides information about the related products for a single product specified by product_id. It returns an array of product IDs that are related to the specified product.
 
+## Getting Started
+
+To use the Atelier products microservice server, you need to have Node.js and npm installed on your system. You can download Node.js from the [official website](https://nodejs.org/en).
+1. Clone the repository
+```
+git clone <url to repo>
+```
+2. Install the dependencies using npm
+```
+cd alb-products
+npm install
+```
+3. Start the server
+```
+npm start
+```
+
+## Usage
+Once the server is running, you can use the endpoints to retrieve information about products
+* a **GET** request to **'/products'** will return an array of product objects
+* a **GET** request to **'/products/:product_id'** requires the target product_id as a query parameter and returns an object with all the information about the target product
+* a **GET** request to **'/products/:product_id/styles'** requires the target product_id as a query parameter and returns an object containing an array of style objects (under the key 'results')
+* a **GET** request to **'/products/:product_id/related** requires the target product_id as a query parameter and returns an array of product ids corresponding to related products
