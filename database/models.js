@@ -1,8 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/products');
-
 const featureSchema = new mongoose.Schema({
   product_id: Number,
   feature: String,
