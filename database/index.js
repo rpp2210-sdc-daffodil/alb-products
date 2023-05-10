@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
+const makeDb = require('./controllers');
+const models = require('./models');
 
-const con = mongoose.connect('mongodb://localhost/products');
+// add controllers to model
+const controllers = makeDb(models.Product);
 
-module.exports = con;
+module.exports = controllers;
