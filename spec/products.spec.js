@@ -74,7 +74,8 @@ describe('specific product endpoint', () => {
   });
 });
 
-xdescribe('product\'s styles endpoint', () => {
+describe('product\'s styles endpoint', () => {
+  beforeEach(() => {getStylesForProduct.mockReset()})
   test('should respond with 200 status code when called correctly', async () => {
     let randomID = generateRandomID();
     const response = await request(appUnit).get(`/products/${randomID}/styles`);
@@ -88,14 +89,14 @@ xdescribe('product\'s styles endpoint', () => {
 
   test('should call getStylesForProduct helper function', async () => {
     let randomID = generateRandomID();
-    await request(appUnit).get(`'/products/${randomID}/styles`);
-    expect(getStylesForProduct.mock.calls.length).toBe(1);
+    await request(appUnit).get(`/products/${randomID}/styles`);
+    expect(getStylesForProduct).toHaveBeenCalled();
   });
 
   test('should invoke getStylesForProduct with correct ID', async() => {
     let randomID = generateRandomID();
     await request(appUnit).get(`/products/${randomID}/styles`);
-    expect(getSpecificProduct.mock.calls[0][0]).toBe(randomID);
+    expect(getStylesForProduct.mock.calls[0][0]).toBe(randomID);
   });
 
   test('should not call helper function if invalid ID', async () => {
@@ -105,9 +106,9 @@ xdescribe('product\'s styles endpoint', () => {
 });
 
 describe('related product endpoint', () => {
+  beforeEach(() => {getRelatedProducts.mockReset()});
   test('should respond with 200 status code', async () => {
     let randomID = generateRandomID();
-    console.log('randomID: ', randomID);
     const response = await request(appUnit).get(`/products/${randomID}/related`);
     expect(response.statusCode).toBe(200);
   });
@@ -126,7 +127,7 @@ describe('related product endpoint', () => {
   test('should invoke getRelatedProducts with correct ID', async() => {
     let randomID = generateRandomID();
     await request(appUnit).get(`/products/${randomID}/related`);
-    expect(getSpecificProduct.mock.calls[0][0]).toBe(randomID);
+    expect(getRelatedProducts.mock.calls[0][0]).toBe(randomID);
   });
 
   test('should not call helper function if invalid ID', async () => {
@@ -172,7 +173,7 @@ describe('getSpecificProduct query function', () => {
   });
 });
 
-xdescribe('getStylesForProduct query function', () => {
+describe('getStylesForProduct query function', () => {
   var randomID = generateRandomID();
   beforeEach(() => {
     randomID = generateRandomID();
@@ -185,6 +186,7 @@ xdescribe('getStylesForProduct query function', () => {
 
   test('should return objects with style properties', async () => {
     let styles = await db.getStylesForProduct(randomID);
+    console.log(styles);
     expect(styles.results[0].style_id).toBeDefined();
     expect(styles.results[1].name).toBeDefined();
   });
@@ -229,11 +231,12 @@ describe('integration tests', () => {
 
   test('/products/:product_id/styles works start to finish', async () => {
     const response = await request(appInt).get(`/products/${randomID}/styles`);
-    expect(response.results[0].name).toBeDefined();
+    console.log('response._body ', response._body)
+    expect(response._body.results[0].name).toBeDefined();
   });
 
   test('/products/:product_id/related works start to finish', async () => {
     const response = await request(appInt).get(`/products/${randomID}/related`);
-    expect(response[0]).toBeDefined();
+    expect(response._body[0]).toBeDefined();
   });
 });

@@ -49,7 +49,7 @@ const makeDb = (model) => {
       };
       return format;
     } catch (err) {
-      console.log('err getting all products', err);
+      console.log(`error getting info for ${product_id}`, err);
       return err;
     }
   };
@@ -59,28 +59,34 @@ const makeDb = (model) => {
       product_id = product_id.toString();
     }
     try {
-      // aggregate doc into proper shape
-      const results = await model.aggregate([
-        { '$match': { 'id': product_id }},
-        { '$project': {
-          'style_id': '$id',
-          'name': '$name',
-          'original_price': '$original_price',
-          'sale_price': '$sale_price',
-          'default?': '$default_style',
-          'photos': [{
-            'thumbnail_url': '$photos.thumbnail_url',
-            'url': 'photos.$url'
-          }],
-          'skus': {
-            '$skus.id': {
-              'quantity': '$skus.quantity',
-              'size': '$skus.size'
-            }
-          }
-        }}
-      ]);
-      // const styleInfo = await model.findOne({ id: product_id }, 'styles');
+      const product = await model.findOne({ id: product_id });
+      const results = product.styles.map((styleObj) => {
+        const photos = styleObj.photos.map((photo) => {
+          return {
+            thumbnail_url: photo.thumbnail_url,
+            url: photo.url,
+          };
+        });
+        const skus = {};
+        styleObj.skus.forEach((sku) => {
+          skus[sku.id] = {
+            quantity: sku.quantity,
+            size: sku.size,
+          };
+        });
+        let isDefault = false;
+        if (styleObj.default_style) {
+          isDefault = true;
+        }
+        return {
+          style_id: parseInt(styleObj.id, 10),
+          name: styleObj.name,
+          original_price: styleObj.original_price,
+          'default?': isDefault,
+          photos,
+          skus,
+        };
+      });
       return {
         product_id,
         results,
@@ -98,9 +104,9 @@ const makeDb = (model) => {
       product_id = product_id.toString();
     }
     try {
-      const relatedProducts = await model.findOne({ id: product_id }, 'related');
-      return relatedProducts.map((relatedObj) => {
-        return relatedObj.related_product_id;
+      const relatedProducts = await model.findOne({ id: product_id });
+      return relatedProducts.related.map((relatedObj) => {
+        return parseInt(relatedObj.related_product_id, 10);
       });
     } catch (err) {
       return err;
@@ -116,3 +122,30 @@ const makeDb = (model) => {
 };
 
 module.exports = makeDb;
+
+// aggregate doc into proper shape
+// const results = await model.aggregate([
+//   { '$match': { 'id': product_id }},
+//   { '$project': {
+//     'style_id': '$id',
+//     'name': '$name',
+//     'original_price': '$original_price',
+//     'sale_price': '$sale_price',
+//     'default?': '$default_style',
+//     'photos': [{
+//       'thumbnail_url': '$photos.thumbnail_url',
+//       'url': 'photos.$url'
+//     }],
+//     'skus': {
+//       '$skus.id': {
+//         'quantity': '$skus.quantity',
+//         'size': '$skus.size'
+//       }
+//     }
+//   }}
+// ]);
+// const styleInfo = await model.findOne({ id: product_id }, 'styles');
+// return {
+//   product_id,
+//   results,
+// };

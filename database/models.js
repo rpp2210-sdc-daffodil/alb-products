@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 // connect to database
-// const con = mongoose.connect('mongodb://localhost/products');
+const con = mongoose.connect('mongodb://localhost/products');
 
 const featureSchema = new mongoose.Schema({
   id: String,

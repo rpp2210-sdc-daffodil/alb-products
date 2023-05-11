@@ -38,11 +38,11 @@ const makeApp = (database) => {
         res.send(styles);
       }
     } catch (err) {
-      res.statusCode(404).send(`error getting styles information for ${req.query.product_id}`, err);
+      res.statusCode(404).send(`error getting styles information for ${req.params.product_id}`, err);
     }
   });
 
-  app.get('/products/:products_id/related', async (req, res) => {
+  app.get('/products/:product_id/related', async (req, res) => {
     try {
       if (!parseInt(req.params.product_id, 10)) {
         res.status(404).send('invalid product_id');
