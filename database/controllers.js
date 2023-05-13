@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const makeDb = (model) => {
   const getAllProducts = async () => {
     try {
-      const allProducts = await model.find({ id: { $lte: 1000 } });
+      const allProducts = await model.find({ id: { $lte: 1000 } }).lean();
       return allProducts.map((product) => {
         return {
           id: parseInt(product.id, 10),
@@ -32,7 +32,7 @@ const makeDb = (model) => {
     // use given product_id to query database
     try {
       // shape data into desired format
-      const productInfo = await model.findOne({ id: product_id });
+      const productInfo = await model.findOne({ id: product_id }).lean();
       const features = productInfo.features.map((featureObj) => {
         return {
           feature: featureObj.feature,
