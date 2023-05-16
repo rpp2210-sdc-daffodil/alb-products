@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-console */
 /* eslint-disable arrow-body-style */
@@ -7,17 +8,17 @@ const mongoose = require('mongoose');
 const makeDb = (model) => {
   const getAllProducts = async () => {
     try {
-      const allProducts = await model.find({ id: { $lte: 1000 } });
-      return allProducts.map((product) => {
-        return {
-          id: parseInt(product.id, 10),
-          name: product.name,
-          slogan: product.slogan,
-          description: product.description,
-          category: product.category,
-          default_price: product.default_price,
-        };
-      });
+      return await model.find({ id: { $lte: 1000 } }).select('id name slogan description category default_price').lean();
+      // return allProducts.map((product) => {
+      //   return {
+      //     id: parseInt(product.id, 10),
+      //     name: product.name,
+      //     slogan: product.slogan,
+      //     description: product.description,
+      //     category: product.category,
+      //     default_price: product.default_price,
+      //   };
+      // });
     } catch (err) {
       console.log('err getting all products', err);
       return err;
@@ -31,7 +32,7 @@ const makeDb = (model) => {
     // use given product_id to query database
     try {
       // shape data into desired format
-      const productInfo = await model.findOne({ id: product_id });
+      const productInfo = await model.findOne({ id: product_id }).select('id name slogan description category default_price features').lean();
       const features = productInfo.features.map((featureObj) => {
         return {
           feature: featureObj.feature,
@@ -59,8 +60,8 @@ const makeDb = (model) => {
       product_id = product_id.toString();
     }
     try {
-      const product = await model.findOne({ id: product_id });
-      const results = product.styles.map((styleObj) => {
+      const styles = await model.findOne({ id: product_id }).select('styles');
+      const results = styles.map((styleObj) => {
         const photos = styleObj.photos.map((photo) => {
           return {
             thumbnail_url: photo.thumbnail_url,
@@ -104,8 +105,8 @@ const makeDb = (model) => {
       product_id = product_id.toString();
     }
     try {
-      const relatedProducts = await model.findOne({ id: product_id });
-      return relatedProducts.related.map((relatedObj) => {
+      const relatedProducts = await model.findOne({ id: product_id }).select('related').lean();
+      return relatedProducts.map((relatedObj) => {
         return parseInt(relatedObj.related_product_id, 10);
       });
     } catch (err) {
