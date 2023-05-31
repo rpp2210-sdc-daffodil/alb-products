@@ -23,7 +23,6 @@ const makeDb = (model) => {
     try {
       // shape data into desired format
       const productInfo = await model.findOne({ id: product_id }).select('id name slogan description category default_price features').lean();
-      console.log(productInfo);
       const features = productInfo.features.map((featureObj) => {
         return {
           feature: featureObj.feature,
@@ -52,7 +51,6 @@ const makeDb = (model) => {
     }
     try {
       const styles = await model.findOne({ id: product_id }).select('styles');
-      console.log('styles', styles);
       const results = styles.styles.map((styleObj) => {
         const photos = styleObj.photos.map((photo) => {
           return {
