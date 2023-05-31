@@ -9,16 +9,6 @@ const makeDb = (model) => {
   const getAllProducts = async () => {
     try {
       return await model.find({ id: { $lte: 1000 } }).select('id name slogan description category default_price').lean();
-      // return allProducts.map((product) => {
-      //   return {
-      //     id: parseInt(product.id, 10),
-      //     name: product.name,
-      //     slogan: product.slogan,
-      //     description: product.description,
-      //     category: product.category,
-      //     default_price: product.default_price,
-      //   };
-      // });
     } catch (err) {
       console.log('err getting all products', err);
       return err;
@@ -33,6 +23,7 @@ const makeDb = (model) => {
     try {
       // shape data into desired format
       const productInfo = await model.findOne({ id: product_id }).select('id name slogan description category default_price features').lean();
+      console.log(productInfo);
       const features = productInfo.features.map((featureObj) => {
         return {
           feature: featureObj.feature,
@@ -61,7 +52,8 @@ const makeDb = (model) => {
     }
     try {
       const styles = await model.findOne({ id: product_id }).select('styles');
-      const results = styles.map((styleObj) => {
+      console.log('styles', styles);
+      const results = styles.styles.map((styleObj) => {
         const photos = styleObj.photos.map((photo) => {
           return {
             thumbnail_url: photo.thumbnail_url,
@@ -93,7 +85,7 @@ const makeDb = (model) => {
         results,
       };
     } catch (err) {
-      console.log(`err getting styles for ${product_id}`);
+      console.log(`err getting styles for ${product_id}`, err);
       return err;
     }
   };
@@ -106,7 +98,7 @@ const makeDb = (model) => {
     }
     try {
       const relatedProducts = await model.findOne({ id: product_id }).select('related').lean();
-      return relatedProducts.map((relatedObj) => {
+      return relatedProducts.related.map((relatedObj) => {
         return parseInt(relatedObj.related_product_id, 10);
       });
     } catch (err) {
@@ -123,30 +115,3 @@ const makeDb = (model) => {
 };
 
 module.exports = makeDb;
-
-// aggregate doc into proper shape
-// const results = await model.aggregate([
-//   { '$match': { 'id': product_id }},
-//   { '$project': {
-//     'style_id': '$id',
-//     'name': '$name',
-//     'original_price': '$original_price',
-//     'sale_price': '$sale_price',
-//     'default?': '$default_style',
-//     'photos': [{
-//       'thumbnail_url': '$photos.thumbnail_url',
-//       'url': 'photos.$url'
-//     }],
-//     'skus': {
-//       '$skus.id': {
-//         'quantity': '$skus.quantity',
-//         'size': '$skus.size'
-//       }
-//     }
-//   }}
-// ]);
-// const styleInfo = await model.findOne({ id: product_id }, 'styles');
-// return {
-//   product_id,
-//   results,
-// };
