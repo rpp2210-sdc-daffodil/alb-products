@@ -87,7 +87,7 @@ const makeApp = (database) => {
         const cacheRelated = await redisClient.get(`related_${req.params.product_id}`);
         if (cacheRelated === null || JSON.parse(cacheRelated).length === 0) {
           related = await database.getRelatedProducts(req.params.product_id);
-          await redisClient.set(`related_${req.params.product_id}`);
+          await redisClient.set(`related_${req.params.product_id}`, related);
         } else {
           related = JSON.parse(cacheRelated);
         }
