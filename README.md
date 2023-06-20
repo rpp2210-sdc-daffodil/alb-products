@@ -122,6 +122,7 @@ Once the server is running, you can use the endpoints to retrieve information ab
   7
 ]
 ```
+**Note:** The performance is significantly improved upon warming up the cache before regular use and using NGINX load balancing across three or more servers.
 
 ## Tech Stack
 ![ReactJS](https://img.shields.io/badge/React-808080?style=for-the-badge&logo=react&logoColor=61DAFB)
