@@ -8,6 +8,8 @@ This repo contains the back-end microservice for the Atelier website products. I
 * [Description](#Description)
 * [Getting Started](#Getting-Started)
 * [Usage](#Usage)
+* [Tech Stack](#Tech-Stack)
+* [Accompanying Microservices](#Accompanying-Microservices)
 
 ## Description
 
@@ -46,3 +48,20 @@ Once the server is running, you can use the endpoints to retrieve information ab
 * a **GET** request to **'/products/:product_id'** requires the target product_id as a query parameter and returns an object with all the information about the target product
 * a **GET** request to **'/products/:product_id/styles'** requires the target product_id as a query parameter and returns an object containing an array of style objects (under the key 'results')
 * a **GET** request to **'/products/:product_id/related** requires the target product_id as a query parameter and returns an array of product ids corresponding to related products
+
+## Tech Stack
+![ReactJS](https://img.shields.io/badge/React-808080?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Node](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+![Nodemon](https://img.shields.io/badge/NODEMON-808080.svg?style=for-the-badge&logo=nodemon&logoColor=008000)
+![Express](https://img.shields.io/badge/Express.js-808080?style=for-the-badge&logo=express&logoColor=00ff00)
+![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+![Axios](https://img.shields.io/badge/Axios-5A29E4?logo=axios&logoColor=fff&style=for-the-badge)
+![Babel](https://img.shields.io/badge/Babel-F9DC3e?style=for-the-badge&logo=babel&logoColor=black)
+![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black)
+![Jest](https://img.shields.io/badge/Jest-808080?style=for-the-badge&logo=Jest&logoColor=ffa500)
+![AWS](https://img.shields.io/badge/Amazon_AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white)
+![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?&style=for-the-badge&logo=redis&logoColor=white)
+
+## Accompanying Microservices
+* [Reviews/Ratings](https://github.com/rpp2210-sdc-daffodil/sk-ratings)
+* [Questions & Answers](https://github.com/rpp2210-sdc-daffodil/NM-QA)
