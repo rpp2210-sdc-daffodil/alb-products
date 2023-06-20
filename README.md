@@ -45,9 +45,83 @@ npm start
 ## Usage
 Once the server is running, you can use the endpoints to retrieve information about products
 * a **GET** request to **'/products'** will return an array of product objects
+```
+[
+  {
+    "id": 1,
+    "name": "Camo Onesie",
+    "slogan": "Blend in to your crowd",
+    "description": "The So Fatigues will wake you up and fit you in. This high energy camo will haveyou blending in to even the wildest surroundings.",
+    "category": "Jackets",
+    "default_price": "69",
+  },
+  // ...
+]
+```
 * a **GET** request to **'/products/:product_id'** requires the target product_id as a query parameter and returns an object with all the information about the target product
+```
+{
+  "id": 11,
+  "name": "Air Minis 250",
+  "slogan": "Full court support",
+  "description": This optimized air cushion pocket reduces impact but keeps a perfect balance underfoot.",
+  "category": "Basketball shoes",
+  "default_price": "100",
+  "features": [
+    {
+      "feature": "Sole",
+      "value": "Rubber"
+    },
+    // ...
+  ],
+}
+```
 * a **GET** request to **'/products/:product_id/styles'** requires the target product_id as a query parameter and returns an object containing an array of style objects (under the key 'results')
+```
+{
+  "product_id": "1",
+  "results": [
+    {
+      "style_id": 1,
+      "name": "Forest Green & Black",
+      "original_price": "140",
+      "sale_price": "0",
+      "default?": true,
+      "photos": [
+        {
+          "thumbnail_url": "urlplaceholder/style_1_photo_number_thumbnail.jpg",
+          "url": "urlplaceholder/style_1_photo_number.jpg"
+        },
+        {
+          "thumbnail_url: "urlplaceholder/style_1_photo_number_thumbnail.jpg",
+          "url": "urlplaceholder/style_1_photo_number.jpg"
+        },
+        // ...
+      ],
+      "skus": {
+        "37": {
+          "quantity": 8,
+          "size": "XS"
+        },
+        "38": {
+          "quantity": 16,
+          "size": "S"
+        },
+        // ...
+      },
+    },
+    // ...
+  ]
+```
 * a **GET** request to **'/products/:product_id/related** requires the target product_id as a query parameter and returns an array of product ids corresponding to related products
+```
+[
+  2,
+  3,
+  8,
+  7
+]
+```
 
 ## Tech Stack
 ![ReactJS](https://img.shields.io/badge/React-808080?style=for-the-badge&logo=react&logoColor=61DAFB)
