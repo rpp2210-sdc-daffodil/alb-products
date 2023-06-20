@@ -26,7 +26,7 @@ The endpoints are:
 To use the Atelier products microservice server, you need to have Node.js and npm installed on your system. You can download Node.js from the [official website](https://nodejs.org/en).
 1. Clone the repository
 ```
-git clone <url to repo>
+git clone https://github.com/rpp2210-sdc-daffodil/alb-products.git
 ```
 2. Install the dependencies using npm
 ```
